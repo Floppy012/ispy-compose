@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  ispy:
+    image: doitandbedone/ispyagentdvr:4.1.1.0
+    restart: unless-stopped
+    ports:
+      - "8090:${HTTP_PORT:-8090}"
+      - "3478:${TURN_PORT:-3478}/udp"
+      - "50000-50010:50000-50010/udp"
+    volumes:
+      - ${MEDIA_PATH:-media}:/agent/Media/WebServerRoot/Media/
+      - config:/agent/Media/XML/
+      - commands:/agent/Commands/
+
+volumes:
+  media:
+    driver: local
+  config:
+    driver: local
+  commands:
+    driver: local
